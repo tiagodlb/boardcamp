@@ -1,7 +1,6 @@
 import connection from "../dbStrategy/postgres.js";
 
 export async function getCategories(req, res) {
-  const search = req.query.name;
   try {
     const { rows: name } = await connection.query("SELECT * FROM categories");
     res.send(name);
@@ -17,10 +16,13 @@ export async function postCategories(req, res) {
   if (!name) return res.sendStatus(400);
   try {
     const { rows: id } = await connection.query(
-      `SELECT * FROM categories WHERE name = '${name}'`
+      `SELECT id FROM categories WHERE name=$1;`,
+      [name]
     );
     if (id.length) return res.sendStatus(409);
-    await connection.query(`INSERT INTO categories (name) VALUES ('${name}')`);
+    await connection.query(`INSERT INTO categories (name) VALUES ($1)`, [
+      name
+    ]);
     res.sendStatus(201);
   } catch (error) {
     return res.status(500).send("Error when you're trying to post a category.");

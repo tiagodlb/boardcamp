@@ -4,15 +4,15 @@ import {
   getCustomer,
   getCustomerId,
   postCustomers,
-  putCustomers
+  putCustomers,
 } from "../controllers/customersController.js";
 import { ValidateCustomer } from "../middlewares/validateCustomer.js";
 
 const customerRouter = Router();
 
-customerRouter.get("/customer", getCustomer);
-customerRouter.get("/customer/:id", getCustomerId);
-customerRouter.post("/customer", ValidateCustomer, postCustomers);
-customerRouter.put("/customer/:id", ValidateCustomer, putCustomers);
+customerRouter.get("/customers", getCustomer);
+customerRouter.get("/customers/:id", getCustomerId);
+customerRouter.post("/customers", ValidateCustomer, postCustomers);
+customerRouter.put("/customers/:id", ValidateCustomer, putCustomers);
 
 export default customerRouter;
