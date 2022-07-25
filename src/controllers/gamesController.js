@@ -4,7 +4,7 @@ export async function getGames(req, res) {
   const search = req.query.name;
   try {
     if(search) {
-      const { rows: users } = await connection.query(`SELECT * FROM games WHERE name Like '%${search}%'`);
+      const { rows: users } = await connection.query(`SELECT * FROM games WHERE name LIKE '%${search}%'`);
       if(users.length === 0) return res.status(200).send("Não existe nenhum resultado para a pesquisa")
       res.status(200).send(users);
     }
